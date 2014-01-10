@@ -1,0 +1,67 @@
+   allocate-registers n, cont ; the argument, continuation,
+   allocate-registers val     ; and result of factorial procedure
+   allocate-registers factorial, base-case ; these hold labels' values
+   allocate-registers sp ; this is the "stack pointer", it records how many
+                         ; memory locations are occupied by saved values
+                         ; (starting at location 0)
+   allocate-registers  one ; this holds the constant 1, used in several places
+
+   ;; set up the constants
+   li one, 1
+   li factorial, factorial-label
+   li base-case, base-case-label
+   ;; initialize the stack pointer (nothing saved yet)
+   li sp, 0
+   ;; set up for the top level call to factorial
+   read n  ; the argument, n, is read in 
+   li cont, after-top-level ; the continuation is set
+   ;; and then we can fall right into the procedure
+
+factorial-label:
+   ;; computes the factorial of n into val and jumps to cont;
+   ;;  doesn't touch the first sp locations of memory and
+   ;;  restores sp back to its entry value when cont is jumped to;
+   ;;  assumes the factorial, base-case, and one registers hold the
+   ;;  constant values established at the beginning of the program
+   jeqz n, base-case
+
+   ;; if n isn't zero, we save n and cont into memory for
+   ;; safe keeping while computing (n-1)!; sp tells us where in
+   ;; memory to save them (so as not to clobber other, previously
+   ;; saved values), and we adjust sp to reflect the new saves
+   st n, sp
+   add sp, sp, one
+   st cont, sp
+   add sp, sp, one
+   ;; now that we're done saving, we can set up for (n-1)!
+   sub n, n, one  ; using n-1 as the new n argument
+   li cont, after-recursive-invocation ; the continuation
+   j factorial                         ;  after this call
+
+after-recursive-invocation:            ;  is down here
+   ;; having made it through the recursive call, the saved
+   ;; values of cont and n can be restored to their registers
+   ;; from memory; note that they are "popped" from the stack
+   ;; in the opposite order they were "pushed" onto the stack,
+   ;; since the second one pushed wound up "on top" (i.e., later
+   ;; in memory), so should be retrieved first
+   sub sp, sp, one
+   ld cont, sp
+   sub sp, sp, one
+   ld n, sp
+   ;; having retrieved n and cont and set sp back to the way it
+   ;; was on entry (since it went up by two and back down by two)
+   ;; we are ready to compute n! as (n-1)! * n, i.e. val * n,
+   ;; putting the result into val, and jump to the continuation
+   mul val, val, n
+   j cont
+
+base-case-label:
+   ;; this is the n = 0 case, which is trivial
+   li val, 1
+   j cont
+
+after-top-level:
+   ;; when the top level factorial has put n! in val, it jumps here
+   write val ; to display that result
+   halt
