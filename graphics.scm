@@ -47,3 +47,50 @@
 
 (eps (pinwheel upside-down-tri) "pinwheel")
 (eps (side-by-side (side-by-side upside-down-tri rcross-bb) test-bb) "side3")
+
+(define half-tri-br
+  (filled-triangle -1 -1 1 -1 1 1))
+(define half-tri-tr
+  (quarter-turn-left half-tri-br))
+(define half-tri-tl
+  (half-turn half-tri-br))
+(define half-tri-bl
+  (quarter-turn-right half-tri-br))
+(define square
+  (invert (filled-triangle 0 0 0 0 0 0)))
+(define empty
+  (filled-triangle 0 0 0 0 0 0))
+
+(define sao-paulo
+  (stack (side-by-side (side-by-side (side-by-side half-tri-br square) half-tri-bl) empty)
+         (side-by-side (side-by-side (side-by-side empty half-tri-tr) square) half-tri-tl)))
+
+(define sao-paulo-left
+  (stack (side-by-side half-tri-br square)
+         (side-by-side empty half-tri-tr)))
+
+(define sao-paulo-right
+  (stack (side-by-side half-tri-bl empty)
+         (side-by-side square half-tri-tl)))
+
+(eps (stack
+      (side-by-side sao-paulo sao-paulo)
+      (side-by-side (side-by-side sao-paulo-right sao-paulo) sao-paulo-left))
+     "saopaulo2")
+
+(define sao-paulo-unit-cell
+  (stack sao-paulo
+         (side-by-side sao-paulo-right sao-paulo-left)))
+
+(eps (stack
+      (side-by-side sao-paulo-unit-cell sao-paulo-unit-cell)
+      (side-by-side sao-paulo-unit-cell sao-paulo-unit-cell))
+     "saopaulo2")
+
+(define sao-paulo-unit-cell-2
+  (stack sao-paulo sao-paulo))
+
+(eps (stack
+      (side-by-side sao-paulo-unit-cell-2 sao-paulo-unit-cell-2)
+      (side-by-side sao-paulo-unit-cell-2 sao-paulo-unit-cell-2))
+     "saopaulo2")
