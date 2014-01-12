@@ -1,3 +1,4 @@
 Concrete Abstractions
 
 2014 jan 10 4 pm - p. 22 Recursion
+2014 jan 11 11 pm - p. 37 ex. 2.6

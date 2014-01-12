@@ -94,3 +94,10 @@
       (side-by-side sao-paulo-unit-cell-2 sao-paulo-unit-cell-2)
       (side-by-side sao-paulo-unit-cell-2 sao-paulo-unit-cell-2))
      "saopaulo2")
+
+(eps (pinwheel
+      (pinwheel
+       (pinwheel
+        (pinwheel rcross-bb))))
+     "manyrcross")
+
