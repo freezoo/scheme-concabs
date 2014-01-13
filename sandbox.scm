@@ -27,3 +27,20 @@ sqrt
 (define f (lambda (x) (+ 10 x)))
 (f 7)
 (square 7)
+
+(define mylist '(1 2 3))
+
+(define alter-head
+  (lambda (lst)
+    (set-car! lst 0)))
+
+(alter-head mylist)
+mylist
+
+(define x 9)
+(define alter-var
+  (lambda (n)
+    (set! n 2)))
+(alter-var x)
+x
+
