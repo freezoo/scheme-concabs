@@ -5,4 +5,5 @@ Concrete Abstractions
 
 /home/heitor/scheme-intro
 
-2014 jan 12 10 pm - 12.html
+2014 jan 12 10 pm - begin 12.html
+2014 jan 13 11 pm - begin 32.html
