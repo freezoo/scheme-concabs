@@ -38,6 +38,7 @@ void??
       count
       (begin
         (display (first args))
+        ;; include count in list
         (apply count-and-disp (cons (+ 1 count) (cdr args))))))
 
 (count-and-disp 10 "1" "a b" "3")
