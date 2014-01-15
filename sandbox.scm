@@ -44,3 +44,8 @@ mylist
 (alter-var x)
 x
 
+(define foo '(22 15 6))
+(define bar (cons 10 (cdr foo)))
+bar
+(set-car! (cdr foo) 99)
+foo
